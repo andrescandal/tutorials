@@ -1,10 +1,13 @@
 package org.andrescandal.domain;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 /**
  * Student's entity class.
  * @author ACandal
  *
  */
+@XStreamAlias("Student")
 public class Student {
 
 	private Integer id;

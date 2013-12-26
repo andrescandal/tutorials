@@ -28,6 +28,12 @@ public class StudentController {
 		studentsMap.put(s2.getId(), s2);		
 	}
 	
+	@RequestMapping(method=RequestMethod.GET, value="/institute")
+	public @ResponseBody String getInstituteName() {
+		
+		return "Spring HttpConverters Institute!";
+	}
+	
 	@RequestMapping(method=RequestMethod.GET, value="/student/{id}")
 	public @ResponseBody Student getStudent(@PathVariable String id) {
 		Student s = studentsMap.get(Integer.parseInt(id));
