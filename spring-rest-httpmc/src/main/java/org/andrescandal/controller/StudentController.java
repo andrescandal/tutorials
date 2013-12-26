@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class StudentController {
 	
 	/**
-	 * Stores the studens data for this demo. (use a datasource instead!)
+	 * Stores the students data for this demo. (use a datasource instead!)
 	 */
 	private static Map<Integer, Student> studentsMap = new HashMap<Integer, Student>();
 	
