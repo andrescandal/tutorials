@@ -1,10 +1,12 @@
 package org.andrescandal.config;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.andrescandal.domain.Student;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
@@ -41,6 +43,8 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     	
     	MarshallingHttpMessageConverter marshallingConverter = new MarshallingHttpMessageConverter(marshaller);
     	converters.add(marshallingConverter);
+    	
+    	marshallingConverter.setSupportedMediaTypes(Arrays.asList(MediaType.APPLICATION_XML, MediaType.TEXT_XML));
     	
     }
 
