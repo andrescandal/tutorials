@@ -24,87 +24,84 @@ import org.springframework.web.client.RestTemplate;
  */
 public class SpringHttpMessageConvertersIntegrationTestsCase {
 
-	private static String BASE_URI = "http://localhost:8080/spring-rest-httpmc/";
-	/**
-	 * Without specifying Accept Header, uses the default response from the
-	 * server (in this case json)
-	 */
-	@Test
-	public void testGetStudent() {
+    private static String BASE_URI = "http://localhost:8080/spring-rest-httpmc/";
 
-		String URI = BASE_URI + "student/{id}";
+    /**
+     * Without specifying Accept Header, uses the default response from the
+     * server (in this case json)
+     */
+    @Test
+    public void testGetStudent() {
 
-		RestTemplate restTemplate = new RestTemplate();
-		Student student = restTemplate.getForObject(URI, Student.class, "1");
+        String URI = BASE_URI + "student/{id}";
 
-		Assert.assertEquals(new Integer(1), student.getId());
+        RestTemplate restTemplate = new RestTemplate();
+        Student student = restTemplate.getForObject(URI, Student.class, "1");
 
-	}
+        Assert.assertEquals(new Integer(1), student.getId());
 
-	/**
-	 * Specifying Accept Header with application/xml for getting the xml response from the server.
-	 */
-	@Test
-	public void testGetStudentAcceptXML() {
+    }
 
-		String URI =BASE_URI + "student/{id}";
+    /**
+     * Specifying Accept Header with application/xml for getting the xml response from the server.
+     */
+    @Test
+    public void testGetStudentAcceptXML() {
 
-		RestTemplate restTemplate = new RestTemplate();
-		restTemplate.setMessageConverters(getMessageConverters());
+        String URI = BASE_URI + "student/{id}";
 
-		HttpHeaders headers = new HttpHeaders();
-		headers.setAccept(Arrays.asList(MediaType.APPLICATION_XML));
-		HttpEntity<String> entity = new HttpEntity<String>(headers);
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.setMessageConverters(getMessageConverters());
 
-		ResponseEntity<Student> response = restTemplate.exchange(URI, HttpMethod.GET,
-				entity, Student.class, "1");
-		Student student = response.getBody();
-		
-		Assert.assertEquals(new Integer(1), student.getId());
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_XML));
+        HttpEntity<String> entity = new HttpEntity<String>(headers);
 
-	}
-	
-	/**
-	 * Specifying Accept Header with application/xml for getting the xml response from the server.
-	 */
-	@Test
-	public void testPUTStudentXML() {
+        ResponseEntity<Student> response = restTemplate.exchange(URI, HttpMethod.GET, entity, Student.class, "1");
+        Student student = response.getBody();
 
-		String URI = BASE_URI + "student/{id}";
-		RestTemplate restTemplate = new RestTemplate();
-		restTemplate.setMessageConverters(getMessageConverters());
+        Assert.assertEquals(new Integer(1), student.getId());
 
-		Student student = new Student(4, "andres", "email@host.com");
-		HttpHeaders headers = new HttpHeaders();
-		headers.setAccept(Arrays.asList(MediaType.APPLICATION_XML));
-		headers.setContentType((MediaType.APPLICATION_XML));
-		HttpEntity<Student> entity = new HttpEntity<Student>(student, headers);
-		
-		ResponseEntity<Student> response = restTemplate.exchange(URI, HttpMethod.PUT,
-				entity, Student.class, student.getId());
-		Student studentResponse = response.getBody();
-		
-		Assert.assertEquals(student.getId(), studentResponse.getId());
+    }
 
-	}
+    /**
+     * Specifying Accept Header with application/xml for getting the xml response from the server.
+     */
+    @Test
+    public void testPUTStudentXML() {
 
+        String URI = BASE_URI + "student/{id}";
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.setMessageConverters(getMessageConverters());
 
-	/**
-	 * Configures Message Converters. 
-	 * @return
-	 */
-	private List<HttpMessageConverter<?>> getMessageConverters() {
-		
-		
-		List<HttpMessageConverter<?>> converters = new ArrayList<HttpMessageConverter<?>>();
-		//adds XML converter using XStreamMarshaller
-    	XStreamMarshaller marshaller = new XStreamMarshaller();
-    	marshaller.setAnnotatedClasses(Student.class);
-    	
-    	MarshallingHttpMessageConverter marshallingConverter = new MarshallingHttpMessageConverter(marshaller);
-    	converters.add(marshallingConverter);
-    	
-    	return converters;
-	}
+        Student student = new Student(4, "andres", "email@host.com");
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_XML));
+        headers.setContentType((MediaType.APPLICATION_XML));
+        HttpEntity<Student> entity = new HttpEntity<Student>(student, headers);
+
+        ResponseEntity<Student> response = restTemplate.exchange(URI, HttpMethod.PUT, entity, Student.class, student.getId());
+        Student studentResponse = response.getBody();
+
+        Assert.assertEquals(student.getId(), studentResponse.getId());
+
+    }
+
+    /**
+     * Configures Message Converters. 
+     * @return
+     */
+    private List<HttpMessageConverter<?>> getMessageConverters() {
+
+        List<HttpMessageConverter<?>> converters = new ArrayList<HttpMessageConverter<?>>();
+        // adds XML converter using XStreamMarshaller
+        XStreamMarshaller marshaller = new XStreamMarshaller();
+        marshaller.setAnnotatedClasses(Student.class);
+
+        MarshallingHttpMessageConverter marshallingConverter = new MarshallingHttpMessageConverter(marshaller);
+        converters.add(marshallingConverter);
+
+        return converters;
+    }
 
 }

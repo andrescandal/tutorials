@@ -44,8 +44,8 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     	MarshallingHttpMessageConverter marshallingConverter = new MarshallingHttpMessageConverter(marshaller);
     	converters.add(marshallingConverter);
     	
-    	marshallingConverter.setSupportedMediaTypes(Arrays.asList(MediaType.APPLICATION_XML, MediaType.TEXT_XML));
-    	
+        marshallingConverter.setSupportedMediaTypes(Arrays.asList(MediaType.APPLICATION_XML, MediaType.TEXT_XML));
+
     }
 
 }
