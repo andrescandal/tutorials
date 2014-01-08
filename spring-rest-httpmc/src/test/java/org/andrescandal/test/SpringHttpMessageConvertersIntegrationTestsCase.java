@@ -22,7 +22,7 @@ import org.springframework.web.client.RestTemplate;
  * @author ACandal
  *
  */
-public class SpringHttpMessageConvertersTests {
+public class SpringHttpMessageConvertersIntegrationTestsCase {
 
 	private static String BASE_URI = "http://localhost:8080/spring-rest-httpmc/";
 	/**
